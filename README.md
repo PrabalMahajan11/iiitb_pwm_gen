@@ -36,3 +36,27 @@ Open your terminal and type the following to install iverilog and GTKWave
 $   sudo apt-get update
 $   sudo apt-get install iverilog gtkwave
 ```
+
+### 4.4 Functional Simulation Process
+To clone the Repository and download the Netlist files for Simulation, enter the following commands in your terminal.
+```
+$   sudo apt install -y git
+$   git clone https://github.com/PrabalMahajan11/iiitb_pwm_gen
+$   cd iiitb_pwm_gen
+$   iverilog iiitb_pwm_gen.v iiitb_pwm_gen_tb.v
+$   ./a.out
+$   gtkwave pwm.vcd
+```
+
+### Functional Characteristics
+
+<img width="1237" alt="pwm" src="https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/d584f807-5cd9-467f-ac28-1dd65f8a9872">
+
+#### Simulation Results while increasing Dutycycle
+<img width="1037" alt="pwmI" src="https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/4c584e6c-b68d-44c9-ae6b-23ee632a683d">
+
+
+#### Simulation Results while decreasing Dutycycle
+<img width="1248" alt="pwmD" src="https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/6fc0c061-6327-471a-a531-569e5f4b5bf7">
+
+
