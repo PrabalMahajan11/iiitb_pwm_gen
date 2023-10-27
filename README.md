@@ -59,4 +59,59 @@ $   gtkwave pwm.vcd
 #### Simulation Results while decreasing Dutycycle
 <img width="1248" alt="pwmD" src="https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/6fc0c061-6327-471a-a531-569e5f4b5bf7">
 
+## 5. Synthesis
+### 5.1 About Synthesis
+**Synthesis:** Synthesis transforms the simple RTL design into a gate-level netlist with all the constraints as specified by the designer. In simple language, Synthesis is a process that converts the abstract form of design to a properly implemented chip in terms of logic gates.
+
+Synthesis takes place in multiple steps:
+
+- Converting RTL into simple logic gates.
+- Mapping those gates to actual technology-dependent logic gates available in the technology libraries.
+- Optimizing the mapped netlist keeping the constraints set by the designer intact.
+
+### 5.1 Synthesizer 
+**Synthesizer:** It is a tool we use to convert out RTL design code to netlist. Yosys is the tool I've used in this project.
+
+#### About Yosys
+Yosys is a framework for Verilog RTL synthesis. It currently has extensive Verilog-2005 support and provides a basic set of synthesis algorithms for various application domains.
+
+- more at https://yosyshq.net/yosys/
+
+To install yosys follow the instructions in this github repository  
+- https://github.com/YosysHQ/yosys
+Now you need to create a yosys_run.sh file , which is the yosys script file used to run the synthesis. The contents of the yosys_run file are given below:
+
+ **note:** Identify the .lib file path in cloned folder and change the path in highlighted text to indentified path
+![yosys](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/dee4315f-848c-439f-806c-fdbad97c2764)
+
+Now, in the terminal of your verilog files folder, run the following commands:
+- Run the following commands to syhthesize.
+```
+$   yosys
+$   yosys>    script yosys_run.sh
+```
+To see different types of cells after synthesis.
+```
+$   yosys>    stat
+```
+- To generate schematics
+```
+$   yosys>    show
+```
+Now the synthesized netlist is written in iiitb_pwm_gen_synth.v file.
+
+## 6. Gate Level Simulation
+### 6.1 About GLS
+GLS is generating the simulation output by running test bench with netlist file generated from synthesis as design under test. Netlist is logically same as RTL code, therefore, same test bench can be used for it.We perform this to verify logical correctness of the design after synthesizing it. Also ensuring the timing of the design is met.
+
+### 6.2 Running GLS
+Folllowing are the commands to run the GLS simulation:
+```
+$ iverilog -DFUNCTIONAL -DUNIT_DELAY=#1 ../verilog_model/primitives.v ../verilog_model/sky130_fd_sc_hd.v iiitb_pwm_gen_synth.v iiitb_pwm_gen_tb.v
+$ ./a.out
+$ gtkwave pwm.vcd
+```
+
+
+
 
