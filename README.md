@@ -5,6 +5,24 @@ This project simulates the designed Pulse Width Modulated Wave Generator with Va
 
 - [2. Applications](#2-Applications)
   
+- [3. Blocked Diagram of PWM GENERATOR](#3-Blocked-Diagram-of-PWM-GENERATOR)
+
+- [4. Functional Simulation](#4-Functional-Simulation)
+  - [4.1 About iverilog](#41-About-iverilog)
+  - [4.2 About GTKWave](#42-About-GTKWave)
+  - [4.3 Installing iverilog and GTKWave](#43-Installing-iverilog-and-GTKWave)
+  - [4.4 Functional Simulation Process](#44-Functional-Simulation-Process)
+  - [4.5 Functional Characteristics](#45-Functional-Characteristics)
+  
+- [5. SYNTHESIS](#5-SYNTHESIS)
+  - [5.1 About Synthesys](#51-About-Synthesys)
+  - [5.2 Synthesizer](#52-Synthesizer)
+  
+- [6. GATE LEVEL SIMULATION](#6-GATE-LEVEL-SIMULATION)
+  - [6.1 About GLS](#61-About-GLS)
+  - [6.2 Running GLS](#62-Running-GLS)
+  - [6.3 Observations from GLS Waveforms](#63-Observations-from-GLS-Waveforms)
+  
 ## 1. Introduction to PWM Generator
 Pulse Width Modulation is a famous technique used to create modulated electronic pulses of the desired width. The duty cycle is the ratio of how long that PWM signal stays at the high position to the total time period.![pwm](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/8c7a5a06-e3de-422c-9d5a-798512dbfe89)
 
