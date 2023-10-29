@@ -237,6 +237,17 @@ $   sudo apt-get install libcairo2-dev
 $   sudo apt-get install mesa-common-dev libglu1-mesa-dev
 $   sudo apt-get install libncurses-dev
 ```
+To install magic Goto home directory
+```
+$   git clone https://github.com/RTimothyEdwards/magic
+$   cd magic/
+$   ./configure
+$   sudo make
+$   sudo make install
+```
+
+Type magic terminal to check whether it installed succesfully or not. type exit to exit magic.
+
   
 
 
