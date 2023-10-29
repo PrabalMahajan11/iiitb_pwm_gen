@@ -98,7 +98,7 @@ $   yosys>    stat
 ```
 $   yosys>    show
 ```
-Now the synthesized netlist is written in iiitb_pwm_gen_synth.v file.
+Now the synthesized netlist is written in ``` iiitb_pwm_gen_synth.v ``` file.
 
 ## 6. Gate Level Simulation
 ### 6.1 About GLS
@@ -106,11 +106,86 @@ GLS is generating the simulation output by running test bench with netlist file 
 
 ### 6.2 Running GLS
 Folllowing are the commands to run the GLS simulation:
+In the verilog model folder, inside the iiitb_pwm_gen folder, run the following commands.
 ```
-$ iverilog -DFUNCTIONAL -DUNIT_DELAY=#1 ../verilog_model/primitives.v ../verilog_model/sky130_fd_sc_hd.v iiitb_pwm_gen_synth.v iiitb_pwm_gen_tb.v
+$ iverilog -DFUNCTIONAL -DUNIT_DELAY=#1 primitives.v sky130_fd_sc_hd.v iiitb_pwm_gen_synth.v iiitb_pwm_gen_tb.v
 $ ./a.out
 $ gtkwave pwm.vcd
 ```
+
+#### GLS Waveforms
+![pwmgls](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/2842b7f8-1abf-4199-9446-66a4d3810591)
+
+- Simulation Results while increasing Dutycycle
+![pwmgls_increase](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/0a315d76-0eb9-419a-a45a-a3faa601c9fd)
+
+
+- Simulation Results while decreasing Dutycycle
+![pwmgls_decrease](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/71159502-3fb0-43e2-85eb-d25197ee9da8)
+
+### 6.3 Observations from GLS Waveforms
+Output characteristics of **Functional simulation** is matched with output of **Gate Level Simulation**.
+
+## 7. Physical Design
+### 7.1 Overview of Physical Design Flow
+Place and Route (PnR) is the core of any ASIC implementation and Openlane flow integrates into it several key open source tools which perform each of the respective stages of PnR. Below are the stages and the respective tools that are called by openlane for the functionalities as described:
+![physicaldesignflow](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/ab280b09-b144-4ca2-a834-bbd6bdd85d01)
+
+### 7.2 OpenSource EDA tools
+OpenLANE utilises a variety of opensource tools in the execution of the ASIC flow:
+
+| Task  | Tool/s |
+| ------------- | ------------- |
+| RTL Synthesis & Technology Mapping	  | yosys, abc  |
+| Floorplan & PDN  | init_fp, ioPlacer, pdn and tapcell  |
+| Placement  | RePLace, Resizer, OpenPhySyn & OpenDP  |
+| Static Timing Analysis  | OpenSTA  |
+| Clock Tree Synthesis	  | TritonCTS  |
+| Routing  | FastRoute and TritonRoute  |
+| SPEF Extraction	  | SPEF-Extractor  |
+| DRC Checks, GDSII Streaming out	  | Magic, Klayout  |
+| LVS check		  | Netgen  |
+| Circuit validity checker	  | CVC  |
+
+### 7.3 OpenLane
+OpenLane is an automated RTL to GDSII flow based on several components including OpenROAD, Yosys, Magic, Netgen, CVC, SPEF-Extractor, CU-GR, Klayout and a number of custom scripts for design exploration and optimization. The flow performs full ASIC implementation steps from RTL all the way down to GDSII.
+
+#### OpenLane Design Stages
+1. Synthesis
+  - ```yosys``` - Performs RTL synthesis.
+  - ```abc``` - Performs technology mapping.
+  - ```OpenSTA``` - Performs static timing analysis on the resulting netlist to generate timing reports.
+2. Floorplan and SDN
+  - ```init_fp``` - Defines the core area for the macro as well as the rows (used for placement) and the tracks (used for routing).
+  - ```ioplacer``` - Places the input and output ports.
+  - ```pdn``` - Generates the power distribution network.
+  - ```tapcell``` - Inserts welltap and decap cells in the floorplan.
+3. Placement
+  - ```RePlace``` - Performs global placement.
+  - ```Resizer``` - Performs optional optimizations on the design.
+  - ```OpenDP``` - Performs detailed placement to legalize the globally placed components.
+4. CTS
+  - ```TritonCTS``` - Synthesizes the clock distribution network (the clock tree).
+5. Routing
+  - ```FastRoute``` - Performs global routing to generate a guide file for the detailed router.
+  - ```CU-GR``` - Another option for performing global routing.
+  - ```TritonRoute``` - Performs detailed routing.
+  - ```SPEF-Extractor``` - Performs SPEF extraction.
+6. GDSII Generation
+  - ```Magic``` - Streams out the final GDSII layout file from the routed def.
+  - ```Klayout``` - Streams out the final GDSII layout file from the routed def as a back-up.
+7. Checks
+  - ```Magic``` - Performs DRC checks and antenna checks.
+  - ```Klayout``` - Performs DRC checks.
+  - ```Netgen``` - Performs LVC checks.
+  - ```CVC``` - Performs circuit validity checks.
+
+
+
+
+
+
+
 
 
 
