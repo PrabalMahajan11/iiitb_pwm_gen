@@ -1,6 +1,10 @@
 # iiitb_pwm_gen -> Pulse Width Modulated Wave Generator with Variable Duty Cycle
 This project simulates the designed Pulse Width Modulated Wave Generator with Variable Duty Cycle. We can generate PWM wave and varry its DUTYCYCLE in steps of 10%.
 
+- [1. Introduction to PWM Generator](#1-Introduction-to-PWM-Generator)
+
+- [2. Applications](#2-Applications)
+  
 ## 1. Introduction to PWM Generator
 Pulse Width Modulation is a famous technique used to create modulated electronic pulses of the desired width. The duty cycle is the ratio of how long that PWM signal stays at the high position to the total time period.![pwm](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/8c7a5a06-e3de-422c-9d5a-798512dbfe89)
 
@@ -179,6 +183,21 @@ OpenLane is an automated RTL to GDSII flow based on several components including
   - ```Klayout``` - Performs DRC checks.
   - ```Netgen``` - Performs LVC checks.
   - ```CVC``` - Performs circuit validity checks.
+    
+more at https://github.com/The-OpenROAD-Project/OpenLane
+
+#### Openlane Installation instructions
+ ```
+$   apt install -y build-essential python3 python3-venv python3-pip
+```
+- Docker Installation Process: https://docs.docker.com/engine/install/ubuntu/
+- Goto home directory->
+```
+$   git clone https://github.com/The-OpenROAD-Project/OpenLane.git
+$   cd OpenLane/
+$   sudo make
+```
+  
 
 
 
