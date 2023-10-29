@@ -248,6 +248,24 @@ $   sudo make install
 
 Type magic terminal to check whether it installed succesfully or not. type exit to exit magic.
 
+### 7.5 Generating Layout with existing library cells
+
+NON-INTERACTIVE MODE: Here we are generating the layout in the non-interactive mode or the automatic mode. In this we cant interact with the flow in the middle of each stage of the flow.The flow completes all the stages starting from synthesis until you obtain the final layout and the reports of various stages which specify the violations and problems if present during the flow.
+- Open terminal in home directory
+```
+$   cd OpenLane/
+$   cd designs/
+$   mkdir iiitb_pwm_gen
+$   cd iiitb_pwm_gen/
+$   wget https://raw.githubusercontent.com/PrabalMahajan11/iiitb_pwm_gen/main/config.json
+$   mkdir src
+$   cd src/
+$   wget https://raw.githubusercontent.com/PrabalMahajan11/iiitb_pwm_gen/main/iiitb_pwm_gen.v
+$   cd ../../../
+$   sudo make mount
+$   ./flow.tcl -design iiitb_pwm_gen
+```
+
   
 
 
