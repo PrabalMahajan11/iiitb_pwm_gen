@@ -304,7 +304,12 @@ $ git clone https://github.com/nickson-jose/vsdstdcelldesign
 ![vsdls-ltr](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/695a8a65-7b42-4659-98fb-ce3edfebdf4a)
 
 
+- Now you need to copy your tech file sky130A.tech to this folder.
 
+- Next run the magic command to open the sky130_vsdinv.mag file.Use the following command:
+```
+$ magic -T sky130A.tech sky130_inv.mag 
+```
   
 
 
