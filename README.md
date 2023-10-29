@@ -266,6 +266,45 @@ $   sudo make mount
 $   ./flow.tcl -design iiitb_pwm_gen
 ```
 
+![flow_comp](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/2ea4a434-1c34-452c-bc25-0f7bd98f9f09)
+
+To see the layout we use a tool called magic which we installed earlier.
+
+Open terminal in home directory
+
+```
+$   cd OpenLane/designs/iiitb_pwm_gen/run
+$   ls
+```
+Select most run directory from the list.
+
+Example
+
+![runfile](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/c517e0c0-10c2-490e-8b67-5f57c486de92)
+
+```
+$ cd RUN_2023.10.29_20.50.45
+```
+
+Run following instruction:
+```
+$   cd results/final/def
+```
+
+### 7.6 Customizing the layout
+#### 7.6.1 sky130_vsdinv cell creation
+Here we are going to customise our layout by including our custom made sky130_vsdinv cell into our layout.
+- CREATING THE SKY130_VSDINV CELL LEF FILE.
+- You need to first get the git repository of the vsdstdccelldesign.To get the repository type the following command:
+```
+$ git clone https://github.com/nickson-jose/vsdstdcelldesign
+```
+![clonevsdiat](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/43716685-9784-4f4b-80dc-27c00e4373b6)
+
+![vsdls-ltr](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/695a8a65-7b42-4659-98fb-ce3edfebdf4a)
+
+
+
   
 
 
