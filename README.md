@@ -369,7 +369,53 @@ Next modify the config.json file in our design to folloing code:
 
 
 
-
-
 ![edited_config](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/728a6d4e-960a-44d2-9dd5-5a36f3f72ed7)
 
+
+### 7.7 Generating Layout which includes custom made sky130_vsdinv
+#### 7.7.1 Invoking OpenLane
+
+Go to openlane directory and open terminal there
+```
+$ sudo make mount
+```
+![Screenshot from 2024-01-30 16-16-05](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/d17ada24-1ac4-4b21-b192-dac5e0e36d58)
+
+
+
+- INTERACTIVE MODE: We need to run the openlane now in the interactive mode to include our custom made lef file before synthesis.Such that the openlane recognises our lef files during the flow for mapping.
+
+- Running openlane in interactive mode: The commands to the run the flow in interactive mode is given below:
+
+```
+$ ./flow.tcl -interactive
+```
+
+Loading the package file
+```
+% package require openlane 0.9
+```
+![Screenshot from 2024-01-30 16-17-36](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/fbc512df-6588-41e4-bdd7-26e5092e62bc)
+
+#### 7.7.2 Preparing the Design
+- Preparing the design and including the lef files: The commands to prepare the design and overwite in a existing run folder the reports and results along with the command to include the lef files is given below:
+
+```
+% prep -design iiitb_pwm_gen
+```
+![Screenshot from 2024-01-30 16-26-28](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/6f820221-1673-4a8e-a9c4-0fb62f49dab1)
+
+Include the below command to include the additional lef (i.e sky130_vsdinv) into the flow:
+```
+% set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+% add_lefs -src $lefs
+```
+
+![Screenshot from 2024-01-30 16-26-45](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/2b164bc4-6ad4-4f76-a2ba-3ed045137858)
+
+
+#### 7.7.4 Synthesis
+
+
+
+  
