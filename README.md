@@ -91,7 +91,7 @@ Synthesis takes place in multiple steps:
 - Mapping those gates to actual technology-dependent logic gates available in the technology libraries.
 - Optimizing the mapped netlist keeping the constraints set by the designer intact.
 
-### 5.1 Synthesizer 
+### 5.2 Synthesizer 
 **Synthesizer:** It is a tool we use to convert out RTL design code to netlist. Yosys is the tool I've used in this project.
 
 #### About Yosys
@@ -291,6 +291,23 @@ Run following instruction:
 $   cd results/final/def
 ```
 
+Update the highlited text with appropriate path
+
+![commandforlayoutwithoutsky](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/85bc00e6-6a7c-4c9d-9c13-d344444c3312)
+
+
+```
+magic -T /home/prabal/Desktop/iiitb_pwm_gen/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../../tmp/merged.max.lef def read iiitb_pwm_gen.def &
+```
+
+Layout will be opened in new window.
+
+#### Layout without sky130_vsdinv
+- The final layout obtained after the completion of the flow in non-interactive mode is shown below:
+
+![layoutwithoutsky](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/0e364adb-332e-4398-ac14-cabac44b87fd)
+
+
 ### 7.6 Customizing the layout
 #### 7.6.1 sky130_vsdinv cell creation
 Here we are going to customise our layout by including our custom made sky130_vsdinv cell into our layout.
@@ -310,15 +327,49 @@ $ git clone https://github.com/nickson-jose/vsdstdcelldesign
 ```
 $ magic -T sky130A.tech sky130_inv.mag 
 ```
-  
+#### 7.6.2 Layout of inverter cell
+
+
+![layoutofsky_130_inv](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/08f60f3a-6aff-4b4b-be56-485f09518747)
+
+- The next step is setting port class and port use attributes. The "class" and "use" properties of the port have no internal meaning to magic but are used by the LEF and DEF format read and write routines, and match the LEF/DEF CLASS and USE properties for macro cell pins. These attributes are set in tkcon window (after selecting each port on layout window. A keyboard shortcut would be,repeatedly pressing s till that port gets highlighed).
+
+The tkcon command window of the port classification is shown in the image below:
+
+
+![metal1](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/29f9cc5a-2f10-408c-b317-6bb7b5eff4a1)
+
+![vpwr_masklayers](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/d003975c-d9ae-4270-8a24-afcdbe25f868)
+
+
+
+![input_nmos_pmos](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/cb018299-e13e-4378-807f-4ccd7eb78a4c)
+
+
+![Y_output](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/aca19246-b0a9-4d99-b64e-dae29e5da8c5)
+
+#### 7.6.3 Generating lef file
+- In the next step, use lef write command to write the LEF file with the same nomenclature as that of the layout .mag file. This will create a sky130_vsdinv.lef file in the same folder.
+
+In tkcon terminal type the following command to generate .lef file
+```
+% lef write sky130_vsdinv
+```
+![write_lef](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/8e33f9ac-9ebe-4b2c-87f0-285bb3566c6f)
+![foldershowing_sky130_vsdin](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/217d28e6-cf79-4bc3-8e2c-d3769e21b849)
+
+Copy the generated lef file to designs/iiit_pwm_gen/src Also copy lib files from vsdcelldesign/libs to designs/iiit_pwm_gen/src
+
+![copy_files](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/d7f87804-6dd1-40cb-8ff5-7852513e09f1)
+
+Next modify the config.json file in our design to folloing code:
+
+
+![config_json_in_folder](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/ec6d8fe7-bf82-4535-83bb-1c4c58c81eba)
 
 
 
 
 
-
-
-
-
-
+![edited_config](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/728a6d4e-960a-44d2-9dd5-5a36f3f72ed7)
 
