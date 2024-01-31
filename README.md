@@ -414,7 +414,79 @@ Include the below command to include the additional lef (i.e sky130_vsdinv) into
 ![Screenshot from 2024-01-30 16-26-45](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/2b164bc4-6ad4-4f76-a2ba-3ed045137858)
 
 
-#### 7.7.4 Synthesis
+#### 7.7.3 Synthesis
+Logic synthesis uses the RTL netlist to perform HDL technology mapping. The synthesis process is normally performed in two major steps:
+- GTECH Mapping – Consists of mapping the HDL netlist to generic gates what are used to perform logical optimization based on AIGERs and other topologies created from the generic mapped netlist.
+- Technology Mapping – Consists of mapping the post-optimized GTECH netlist to standard cells described in the PDK
+
+To synthesize the code run the following command
+```
+% run_synthesis
+```
+![Screenshot from 2024-01-31 14-23-09](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/16f66f1e-f03f-4ada-b63a-fbc8094ec892)
+
+
+
+
+Statistics after synthesis
+To check post synthesis statistics, visit the following directory:
+```
+/Desktop/iiitb_pwm_gen/OpenLane/designs/iiitb_pwm_gen/runs/RUN_2024.01.31_08.52.17/reports/synthesis$ cat 1-synthesis.AREA_0.stat.rpt
+```
+![Screenshot from 2024-01-31 14-30-33](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/b5664b22-ecd1-47ff-b7a4-001be37a9756)
+
+
+Calculation of Flop Ratio:
+```
+             Number of D Flip flops 
+Flop ratio = -------------------------
+             Total Number of cells
+```
+Here, total number of flip flops = 38 + 2.
+Total number of cells = 179.
+
+Flip-Flop to standard cell ratio = 40/179 = 0.22346
+
+#### 7.7.4 Floorplan
+Goal is to plan the silicon area and create a robust power distribution network (PDN) to power each of the individual components of the synthesized netlist. In addition, macro placement and blockages must be defined before placement occurs to ensure a legalized GDS file. In power planning we create the ring which is connected to the pads which brings power around the edges of the chip. We also include power straps to bring power to the middle of the chip using higher metal layers which reduces IR drop and electro-migration problem.
+
+- Importance of files in increasing priority order:
+    floorplan.tcl - System default envrionment variables conifg.tcl sky130A_sky130_fd_sc_hd_config.tcl
+- Floorplan environment cariables or switches:
+  -  FP_CORE_UTIL - floorplan core utilisation
+  -  FP_ASPECT_RATIO - floorplan aspect ratio
+  -   FP_CORE_MARGIN - Core to die margin area FP_IO_MODE - defines pin configurations (1 = equidistant/0         = not equidistant)
+  -   FP_CORE_VMETAL - vertical metal layer
+  -   FP_CORE_HMETAL - horizontal metal layer
+- Note: Usually, vertical metal layer and horizontal metal layer values will be 1 more than that specified in the file
+- Following command helps to run floorplan
+```
+% run_floorplan
+```
+![Screenshot from 2024-01-31 14-47-09](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/5756a5ef-32b1-482c-8b1b-764b821d3a80)
+
+
+- Post the floorplan run, a .def file will have been created within the results/floorplan directory. We may review floorplan files by checking the floorplan.tcl. The system defaults will have been overriden by switches set in conifg.tcl and further overriden by switches set in sky130A_sky130_fd_sc_hd_config.tcl.
+- To view the floorplan: Magic is invoked after moving to the results/floorplan directory,then use the following command:
+
+```
+magic -T /home/prabal/Desktop/iiitb_pwm_gen/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.nom.lef def read iiitb_pwm_gen.def &
+```
+
+Floorplan
+
+![Screenshot from 2024-01-31 15-07-36](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/ac4df466-153f-4dbd-acc5-621b492ded3e)
+
+Die area (post floor plan)
+
+![Screenshot from 2024-01-31 15-06-05](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/698accb9-8323-4d62-aafa-e10d43e127f2)
+
+
+Core area (post floor plan)
+![Screenshot from 2024-01-31 15-06-21](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/05450e49-e161-4a88-8900-f95b4d001a38)
+
+
+#### 7.7.5 Placement
 
 
 
