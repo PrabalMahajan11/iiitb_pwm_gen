@@ -451,13 +451,13 @@ Flip-Flop to standard cell ratio = 40/179 = 0.22346
 Goal is to plan the silicon area and create a robust power distribution network (PDN) to power each of the individual components of the synthesized netlist. In addition, macro placement and blockages must be defined before placement occurs to ensure a legalized GDS file. In power planning we create the ring which is connected to the pads which brings power around the edges of the chip. We also include power straps to bring power to the middle of the chip using higher metal layers which reduces IR drop and electro-migration problem.
 
 - Importance of files in increasing priority order:
-    floorplan.tcl - System default envrionment variables conifg.tcl sky130A_sky130_fd_sc_hd_config.tcl
+    ```floorplan.tcl``` - System default envrionment variables ```conifg.tcl``` ```sky130A_sky130_fd_sc_hd_config.tcl```
 - Floorplan environment cariables or switches:
-  -  FP_CORE_UTIL - floorplan core utilisation
-  -  FP_ASPECT_RATIO - floorplan aspect ratio
-  -   FP_CORE_MARGIN - Core to die margin area FP_IO_MODE - defines pin configurations (1 = equidistant/0         = not equidistant)
-  -   FP_CORE_VMETAL - vertical metal layer
-  -   FP_CORE_HMETAL - horizontal metal layer
+  -  ```FP_CORE_UTIL``` - floorplan core utilisation
+  -  ```FP_ASPECT_RATIO``` - floorplan aspect ratio
+  -  ```FP_CORE_MARGIN``` - Core to die margin area ```FP_IO_MODE``` - defines pin configurations (1 = equidistant/0         = not equidistant)
+  -  ```FP_CORE_VMETAL``` - vertical metal layer
+  -  ```FP_CORE_HMETAL``` - horizontal metal layer
 - Note: Usually, vertical metal layer and horizontal metal layer values will be 1 more than that specified in the file
 - Following command helps to run floorplan
 ```
@@ -477,17 +477,34 @@ Floorplan
 
 ![Screenshot from 2024-01-31 15-07-36](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/ac4df466-153f-4dbd-acc5-621b492ded3e)
 
-Die area (post floor plan)
+```Die area (post floor plan)```
 
 ![Screenshot from 2024-01-31 15-06-05](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/698accb9-8323-4d62-aafa-e10d43e127f2)
 
 
-Core area (post floor plan)
+```Core area (post floor plan)```
+
 ![Screenshot from 2024-01-31 15-06-21](https://github.com/PrabalMahajan11/iiitb_pwm_gen/assets/100370090/05450e49-e161-4a88-8900-f95b4d001a38)
 
 
 #### 7.7.5 Placement
 
+Place the standard cells on the floorplane rows, aligned with sites defined in the technology lef file. Placement is done in two steps: Global and Detailed. In Global placement tries to find optimal position for all cells but they may be overlapping and not aligned to rows, detailed placement takes the global placement and legalizes all of the placements trying to adhere to what the global placement wants.
+- The next step in the OpenLANE ASIC flow is placement. The synthesized netlist is to be placed on the floorplan. Placement is perfomed in 2 stages:
+- Global Placement: It finds optimal position for all cells which may not be legal and cells may overlap. Optimization is done through reduction of half parameter wire length.
+- Detailed Placement: It alters the position of cells post global placement so as to legalise them.
 
+run the following command to run the placement
+```
+% run_placement
+```
 
-  
+#### Clock Tree Synthesis (CTS)
+
+- Clock tree synteshsis is used to create the clock distribution network that is used to deliver the clock to all sequential elements. The main goal is to create a network with minimal skew across the chip. H-trees are a common network topology that is used to achieve this goal.
+- The purpose of building a clock tree is enable the clock input to reach every element and to ensure a zero clock skew. H-tree is a common methodology followed in CTS. Before attempting a CTS run in TritonCTS tool, if the slack was attempted to be reduced in previous run, the netlist may have gotten modified by cell replacement techniques. Therefore, the verilog file needs to be modified using the write_verilog command. Then, the synthesis, floorplan and placement is run again
+- Run the following command to perform CTS
+
+```
+% run_cts
+```
