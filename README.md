@@ -508,3 +508,31 @@ run the following command to run the placement
 ```
 % run_cts
 ```
+
+
+#### 7.7.7 Routing
+Implements the interconnect system between standard cells using the remaining available metal layers after CTS and PDN generation. The routing is performed on routing grids to ensure minimal DRC errors.
+
+- OpenLANE uses the TritonRoute tool for routing. There are 2 stages of routing:
+  - Global routing: Routing region is divided into rectangle grids which are represented as course 3D routes 
+     (Fastroute tool).
+  - Detailed routing: Finer grids and routing guides used to implement physical wiring (TritonRoute tool).
+- Features of TritonRoute:
+- Honouring pre-processed route guides
+- Assumes that each net satisfies inter guide connectivity
+- Uses MILP based panel routing scheme
+- Intra-layer parallel and inter-layer sequential routing framework
+
+Run the following command to run the routing:
+```
+% run_routing
+```
+
+##### Do know in routing stage
+- ```run_routing``` - To start the routing
+- The options for routing can be set in the ```config.tcl``` file. The optimisations in routing can also be done by specifying the routing strategy to use different version of ```TritonRoute Engine```. There is a trade0ff between the optimised route and the runtime for routing. The routing stage must have the ```CURRENT_DEF``` set to ```pdn.def```. The two stages of routing are performed by the following engines: Global Route : Fast Route Detailed Route : Triton Route Fast Route generates the routing guides, whereas Triton Route uses the Global Route and then completes the routing with some strategies and optimisations for finding the best possible path connect the pins.
+- Layout in magic tool post routing: the design can be viewed on magic within ```results/routing directory```. Run the follwing command in that directory:
+
+```
+magic -T /home/prabal/Desktop/iiitb_pwm_gen/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.nom.lef def read iiitb_pwm_gen.def &
+```
